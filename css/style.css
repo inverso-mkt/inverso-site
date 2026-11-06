@@ -1,0 +1,262 @@
+/* Inverso: preto, branco e a ideia de inversão. Hierarquia em três pesos, como na peça "Leia aqui". */
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/montserrat.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/montserrat-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --black: #000;
+  --white: #fff;
+  --font: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --pad: clamp(1.25rem, 4vw, 3.5rem);
+  --ease: cubic-bezier(.7, 0, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+p { margin: 0; }
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+/* ---------- Barra superior (inverte sozinha sobre qualquer fundo) ---------- */
+
+.bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem var(--pad);
+  color: var(--white);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+.bar > * { pointer-events: auto; }
+
+.brand { display: block; line-height: 0; }
+.brand__logo { height: 1.25rem; width: auto; aspect-ratio: 2162 / 356.5; display: block; }
+
+.btn {
+  font-weight: 600;
+  font-size: .875rem;
+  text-decoration: none;
+  padding: .65rem 1.15rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+.btn:hover { background: var(--white); color: var(--black); }
+
+/* ---------- Palco: hero preto + íris branca que se abre a partir do "o" ---------- */
+
+.stage { position: relative; }
+
+.pin {
+  position: relative;
+  background: var(--black);
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 var(--pad) clamp(1.5rem, 4vw, 3.25rem);
+}
+
+/* Segundo e terceiro degraus da hierarquia: médio, depois leve em itálico */
+.hero__copy {
+  max-width: 44rem;
+  margin-bottom: clamp(1.75rem, 5vw, 4rem);
+}
+.hero__lead {
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.3vw, 3.25rem);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+}
+.hero__sub {
+  margin-top: 1rem;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(.95rem, 1.35vw, 1.25rem);
+  opacity: .85;
+}
+
+/* Primeiro degrau: a marca, em tamanho de fachada */
+.wordmark { margin: 0; line-height: 0; }
+.wordmark__rise { position: relative; display: block; overflow: hidden; }
+.wordmark svg { display: block; width: 100%; height: auto; color: var(--white); }
+
+/* Ponto de origem da íris: centro do "o" da marca */
+.o-anchor { position: absolute; width: 0; height: 0; }
+
+/* Entrada: a marca sobe de dentro do chão. Única coreografia automática da página. */
+.js .wordmark svg {
+  animation: rise 1.15s var(--ease) both;
+  animation-delay: .15s;
+}
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to   { transform: none; }
+}
+.js .hero__copy {
+  animation: fade 1s ease both;
+  animation-delay: .95s;
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Camada branca. Sem JS ela é uma seção normal; com JS vira a íris. */
+.iris {
+  position: relative;
+  background: var(--white);
+  color: var(--black);
+  padding: clamp(5.5rem, 12vh, 8rem) var(--pad) clamp(2rem, 6vh, 4rem);
+}
+.iris__title {
+  margin: 0;
+  max-width: 12ch;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8.4vw, 8.25rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+}
+.iris__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  margin-top: clamp(2rem, 6vh, 4.5rem);
+}
+.iris__aside {
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.55vw, 1.4rem);
+  line-height: 1.4;
+  letter-spacing: -.01em;
+  max-width: 26rem;
+}
+.iris__body {
+  max-width: 34rem;
+  font-weight: 400;
+  font-size: clamp(.95rem, 1.15vw, 1.075rem);
+}
+.iris__close {
+  margin-top: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+@media (min-width: 52rem) {
+  .iris__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+}
+
+/* Modo vivo (JS ativo e movimento permitido): a íris cobre o palco e abre com a rolagem */
+.is-live .stage { height: 260vh; }
+.is-live .pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 34rem;
+  overflow: hidden;
+}
+.is-live .hero {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+}
+.is-live .iris {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  clip-path: circle(0px at 50% 50%);
+  will-change: clip-path;
+}
+.is-live .iris__text { width: 100%; }
+
+/* ---------- Lente: segue o mouse e inverte o que estiver embaixo ---------- */
+
+.lens {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 9rem;
+  height: 9rem;
+  margin: -4.5rem 0 0 -4.5rem;
+  border-radius: 50%;
+  background: var(--white);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-200px, -200px, 0) scale(1);
+  transition: opacity .3s ease;
+  will-change: transform;
+}
+.lens.on { opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  .lens { display: none; }
+}
+
+/* ---------- Rodapé ---------- */
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: clamp(3rem, 9vw, 7rem) var(--pad) 2rem;
+  background: var(--black);
+  color: var(--white);
+}
+.foot__ig {
+  font-weight: 800;
+  font-size: clamp(2rem, 9vw, 8rem);
+  line-height: 1;
+  letter-spacing: -.045em;
+  text-decoration: none;
+  width: fit-content;
+}
+.foot__small { font-size: .85rem; font-weight: 300; font-style: italic; opacity: .75; }
+
+/* ---------- Movimento reduzido: tudo parado, tudo legível ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .wordmark svg, .js .hero__copy { animation: none; }
+  .btn { transition: none; }
+}
