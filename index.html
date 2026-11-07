@@ -15,6 +15,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
+<script src="js/servicos.js" defer></script>
 </head>
 <body>
 
@@ -28,6 +29,9 @@
   <a class="brand" href="#topo" aria-label="Inverso, início">
     <svg class="brand__logo" viewBox="0 0 2162.0 356.5" aria-hidden="true"><use href="#logo"/></svg>
   </a>
+  <nav class="bar__nav" aria-label="Seções">
+    <a href="#servicos">Serviços</a>
+  </nav>
   <a class="btn" href="https://www.instagram.com/inverso.mkt/" target="_blank" rel="noopener">Falar com a gente</a>
 </header>
 
@@ -60,6 +64,117 @@
           </div>
         </div>
       </div>
+
+    </div>
+  </section>
+  <section class="svc" id="servicos" aria-labelledby="svc-title">
+    <h2 class="svc__title" id="svc-title">O que a gente faz.</h2>
+    <p class="svc__intro">Quatro frentes que trabalham juntas. Escolha uma para ver como ela funciona.</p>
+
+    <div class="flow">
+      <ul class="flow__nodes" role="tablist" aria-label="Frentes de trabalho">
+        <li>
+          <button class="node" role="tab" id="tab-estrategia" aria-controls="svc-estrategia" aria-selected="true" type="button">
+            <span class="node__name">Estratégia e tráfego pago</span>
+            <span class="node__tag">Primeiros 15 dias e revisão todo mês</span>
+          </button>
+        </li>
+        <li>
+          <button class="node" role="tab" id="tab-redacao" aria-controls="svc-redacao" aria-selected="false" tabindex="-1" type="button">
+            <span class="node__name">Redação</span>
+            <span class="node__tag">Pauta mensal de conteúdos</span>
+          </button>
+        </li>
+        <li>
+          <button class="node" role="tab" id="tab-criacao" aria-controls="svc-criacao" aria-selected="false" tabindex="-1" type="button">
+            <span class="node__name">Criação e design</span>
+            <span class="node__tag">Carrosséis, capas e destaques</span>
+          </button>
+        </li>
+        <li>
+          <button class="node" role="tab" id="tab-social" aria-controls="svc-social" aria-selected="false" tabindex="-1" type="button">
+            <span class="node__name">Storymaker e social media</span>
+            <span class="node__tag">De segunda a sexta</span>
+          </button>
+        </li>
+      </ul>
+      <p class="flow__loop">Todo mês, as métricas voltam para a estratégia: o que deu resultado fica, o que não deu, muda.</p>
+    </div>
+
+    <div class="panels">
+
+      <article class="panel" role="tabpanel" id="svc-estrategia" aria-labelledby="tab-estrategia">
+        <div class="panel__head">
+          <h3>Estratégia, captação e tráfego pago</h3>
+          <p>Antes de qualquer publicação, a gente entende o seu negócio e define para onde o perfil vai. Depois, conduz as captações e o tráfego pago e acompanha os números.</p>
+        </div>
+        <div class="panel__body">
+          <h4>Como funciona</h4>
+          <p class="panel__group">Nos primeiros 15 dias</p>
+          <ul>
+            <li>De 3 a 4 reuniões, que costumam ser mais rápidas quando a agenda ajuda.</li>
+            <li>Briefing e análise do seu segmento.</li>
+            <li>Definição do tom de voz e onboarding.</li>
+            <li>Metas (OKRs): os pontos mais importantes do seu perfil nos próximos meses.</li>
+          </ul>
+          <p class="panel__group">Depois, no dia a dia</p>
+          <ul>
+            <li>Captação de fotos e vídeos marcada a cada 15 dias.</li>
+            <li>Tráfego pago para levar os conteúdos a mais gente.</li>
+            <li>Revisão das métricas todo mês.</li>
+          </ul>
+          <p class="panel__get">Você recebe a estratégia do seu perfil, as captações e uma revisão mensal do que está dando resultado.</p>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="svc-redacao" aria-labelledby="tab-redacao">
+        <div class="panel__head">
+          <h3>Redação</h3>
+          <p>Os redatores transformam a estratégia em texto: o que será publicado, o que será dito em cada conteúdo e o que será falado nos vídeos.</p>
+        </div>
+        <div class="panel__body">
+          <h4>Como funciona</h4>
+          <ul>
+            <li>Parte do briefing, do tom de voz e das metas definidos na estratégia.</li>
+            <li>Monta a pauta mensal de conteúdos.</li>
+            <li>Escreve os textos e os roteiros de cada conteúdo.</li>
+          </ul>
+          <p class="panel__get">Você recebe a pauta do mês, os textos e os roteiros.</p>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="svc-criacao" aria-labelledby="tab-criacao">
+        <div class="panel__head">
+          <h3>Criação e design</h3>
+          <p>A parte visual do perfil: o que você vê no feed, nas capas dos vídeos e nos destaques. E, quando faz sentido, também fora da rede, porque a comunicação não termina nela.</p>
+        </div>
+        <div class="panel__body">
+          <h4>O que a gente produz</h4>
+          <ul>
+            <li>Carrosséis para o feed.</li>
+            <li>Capas de vídeo.</li>
+            <li>Destaques do perfil.</li>
+            <li>Material impresso, como brindes, quando o projeto pede.</li>
+          </ul>
+          <p class="panel__get">Você recebe as peças prontas para publicar e, se houver, o material para levar para fora da rede.</p>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="svc-social" aria-labelledby="tab-social">
+        <div class="panel__head">
+          <h3>Storymaker e social media</h3>
+          <p>Uma profissional acompanha você todos os dias úteis. Ela conversa com você, apresenta a pauta do dia e monta os stories em tempo real, junto com você.</p>
+        </div>
+        <div class="panel__body">
+          <h4>Como funciona</h4>
+          <ul>
+            <li>De segunda a sexta, contato diário com você.</li>
+            <li>Apresentação da pauta do dia.</li>
+            <li>Stories montados na hora, com a sua participação.</li>
+          </ul>
+          <p class="panel__get">Você recebe stories todos os dias úteis e uma comunicação sempre ativa com a equipe.</p>
+        </div>
+      </article>
 
     </div>
   </section>

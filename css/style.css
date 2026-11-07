@@ -233,6 +233,223 @@ a { color: inherit; }
   .lens { display: none; }
 }
 
+/* ---------- Serviços: um fluxo de quatro frentes, clicável ---------- */
+
+.bar__nav { display: none; margin-left: auto; margin-right: 1.5rem; }
+.bar__nav a {
+  font-weight: 600;
+  font-size: .875rem;
+  text-decoration: none;
+  padding: .4rem 0;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color .25s var(--ease);
+}
+.bar__nav a:hover { border-bottom-color: currentColor; }
+@media (min-width: 40rem) { .bar__nav { display: block; } }
+
+.svc {
+  background: var(--black);
+  color: var(--white);
+  padding: clamp(4.5rem, 11vw, 9rem) var(--pad) clamp(3.5rem, 8vw, 7rem);
+}
+.svc__title {
+  margin: 0;
+  max-width: 12ch;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 7.6vw, 7.5rem);
+  line-height: .98;
+  letter-spacing: -.045em;
+}
+.svc__intro {
+  margin-top: 1.5rem;
+  max-width: 30rem;
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+
+/* Fluxo: as frentes em ordem, ligadas por uma linha que desenha o caminho */
+.flow { margin-top: clamp(2.5rem, 6vw, 5rem); }
+
+.flow__nodes {
+  --gap: .75rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.flow__nodes li { position: relative; display: flex; }
+
+.node {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-height: 7.5rem;
+  padding: 1.1rem 1.15rem;
+  font: inherit;
+  text-align: left;
+  color: var(--white);
+  background: var(--black);
+  border: 1.5px solid var(--white);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color .3s var(--ease), color .3s var(--ease);
+}
+.node__name {
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.55vw, 1.4rem);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+}
+.node__tag {
+  font-weight: 300;
+  font-style: italic;
+  font-size: .875rem;
+  line-height: 1.35;
+}
+.node:hover { background: #1c1c1c; }
+.node[aria-selected="true"] { background: var(--white); color: var(--black); }
+.node[aria-selected="true"]:hover { background: var(--white); }
+
+.flow__loop {
+  margin: 1.25rem 0 0;
+  max-width: 34rem;
+  font-weight: 300;
+  font-style: italic;
+  font-size: .95rem;
+}
+
+@media (min-width: 52rem) {
+  .flow__nodes {
+    --gap: clamp(1.25rem, 3vw, 3rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .node { min-height: 9.5rem; padding: 1.35rem 1.4rem; }
+
+  /* linha de fundo que passa por trás dos botões e aparece só nos intervalos */
+  .flow__nodes::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1.5px;
+    background: var(--white);
+    transform-origin: left center;
+  }
+  /* seta indicando a direção entre uma frente e a seguinte */
+  .flow__nodes li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: calc(var(--gap) / -2 - 5px);
+    z-index: 1;
+    width: 0;
+    height: 0;
+    margin-top: -6px;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent var(--white);
+  }
+
+  /* retorno: do fim do fluxo de volta ao começo */
+  .flow__loop {
+    position: relative;
+    max-width: none;
+    margin: .6rem calc(12.5% - 1px) 0;
+    padding: 1.1rem 1.5rem 0;
+    text-align: center;
+    border: 1.5px solid var(--white);
+    border-top: 0;
+    border-radius: 0 0 1.5rem 1.5rem;
+    height: 3.5rem;
+  }
+  .flow__loop::before {
+    content: "";
+    position: absolute;
+    top: -9px;
+    left: -7.5px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 6px 10px 6px;
+    border-color: transparent transparent var(--white) transparent;
+  }
+}
+
+/* A linha se desenha uma vez, quando a seção aparece */
+@media (min-width: 52rem) {
+  .js .flow__nodes::before { transform: scaleX(0); transition: transform 1.2s var(--ease); }
+  .js .flow.in .flow__nodes::before { transform: scaleX(1); }
+}
+
+/* Painel branco: abre a partir do ponto clicado, como a íris da abertura */
+.panels { margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+
+.panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  background: var(--white);
+  color: var(--black);
+}
+.panel[hidden] { display: none; }
+.panel + .panel { margin-top: 1rem; }
+
+.panel__head h3 {
+  margin: 0;
+  max-width: 14ch;
+  font-weight: 800;
+  font-size: clamp(1.9rem, 3.8vw, 3.6rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+}
+.panel__head p {
+  margin-top: 1.25rem;
+  max-width: 30rem;
+  font-weight: 500;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.panel__body h4 {
+  margin: 0 0 .5rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.panel__group {
+  margin-top: 1.25rem;
+  font-weight: 700;
+  font-size: .95rem;
+}
+.panel__body ul { margin: 0; padding: 0; list-style: none; }
+.panel__body li {
+  padding: .75rem 0;
+  font-weight: 400;
+  font-size: clamp(.95rem, 1.1vw, 1.05rem);
+  border-top: 1px solid rgba(0, 0, 0, .22);
+}
+.panel__body li:last-child { border-bottom: 1px solid rgba(0, 0, 0, .22); }
+.panel__get {
+  margin-top: 1.5rem;
+  max-width: 32rem;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+@media (min-width: 52rem) {
+  .panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); }
+}
+
 /* ---------- Rodapé ---------- */
 
 .foot {
