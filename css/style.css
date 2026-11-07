@@ -171,7 +171,7 @@ a { color: inherit; }
 .is-live .story { position: absolute; inset: 0; padding: 0; gap: 0; display: block; }
 .is-live .chap {
   position: absolute; inset: 0;
-  padding: clamp(4.5rem, 11vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem);
+  padding: calc(var(--barh, 4.5rem) + 1rem) var(--pad);
   align-content: center;
   --in: 0; --out: 0;
   opacity: calc(1 - var(--out));
@@ -198,19 +198,20 @@ a { color: inherit; }
   display: block; position: relative; justify-self: center;
   width: min(86vw, 52vh); aspect-ratio: 1; --R: 38%;
   --spin: calc(var(--in) * 40deg);
+  --tilt: 58deg;
+  transform-style: preserve-3d; transform: perspective(1100px) rotateX(var(--tilt));
 }
 .orbit__ring { position: absolute; inset: 12%; border: 1px dashed rgba(0,0,0,.35); border-radius: 50%; transform: rotate(var(--spin)); }
 .orbit__core { position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; margin: -11% 0 0 -11%; display: grid; place-items: center; gap: .1rem; align-content: center; text-align: center; font-size: .72rem; font-weight: 700; border-radius: 50%; background: var(--black); color: var(--white); }
-.is-live .orbit__core { transform: scale(calc(.4 + var(--v) * .6)); opacity: var(--v); }
+.is-live .orbit__core { transform: rotateX(calc(var(--tilt) * -1)) scale(calc(.4 + var(--v) * .6)); opacity: var(--v); }
 .orbit__core .sym { display: block; width: 38%; aspect-ratio: 1; background: #fff; -webkit-mask: var(--symm) center / contain no-repeat; mask: var(--symm) center / contain no-repeat; }
-.sat { position: absolute; left: 50%; top: 50%; width: 0; height: 0; --a: calc(var(--i) * 45deg + var(--spin, 0deg) - 90deg); transform: rotate(var(--a)); }
+.sat { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; --a: calc(var(--i) * 45deg + var(--spin, 0deg) - 90deg); transform: rotate(var(--a)); }
 .sat em {
   position: absolute; left: calc(min(86vw, 52vh) * .38); top: 0; transform: translate(-50%, -50%) rotate(calc(var(--a) * -1));
   white-space: nowrap; font-style: normal; font-weight: 600; font-size: clamp(.68rem, 1.9vh, .9rem);
   padding: .4em .85em; border: 1.5px solid var(--black); border-radius: 999px; background: var(--white);
 }
-.is-live .sat { opacity: var(--v); }
-.is-live .sat em { transform: translate(-50%, -50%) rotate(calc(var(--a) * -1)) scale(calc(.6 + var(--v) * .4)); }
+.is-live .sat em { opacity: var(--v); transform: translate(-50%, -50%) rotate(calc(var(--a) * -1)) rotateX(calc(var(--tilt) * -1)) scale(calc(.6 + var(--v) * .4)); }
 .sat:nth-of-type(odd) em { font-weight: 800; }
 
 /* Capítulo 5: o símbolo que vira a página preta */
@@ -223,17 +224,13 @@ a { color: inherit; }
 
 @media (min-width: 60rem) {
   .is-live .chap--3 { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: clamp(2rem, 6vw, 6rem); }
-  .is-live .orbit { width: min(44vw, 74vh); }
-  .sat em { left: calc(min(44vw, 74vh) * .38); }
-  .is-live .chap--4 { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); align-items: end; column-gap: clamp(2rem, 6vw, 6rem); }
-  .is-live .chap--4 .chap__kicker { grid-column: 1 / -1; align-self: start; }
-  .is-live .chap--4 .chap__body { align-self: end; }
+  .is-live .orbit { width: min(44vw, 86vh); }
+  .sat em { left: calc(min(44vw, 86vh) * .38); }
 }
 @media (max-width: 59.99rem) {
   .is-live .chap--3 { align-content: start; padding-top: 5.5rem; }
-  .is-live .orbit { width: min(80vw, 40vh); }
-  .sat em { left: calc(min(80vw, 40vh) * .38); }
-  .is-live .chap--4 .chap__body { display: none; }
+  .is-live .orbit { width: min(86vw, 52vh); --tilt: 54deg; }
+  .sat em { left: calc(min(86vw, 52vh) * .38); }
 }
 
 /* ---------- Lente: segue o mouse e inverte o que estiver embaixo ---------- */
@@ -1082,7 +1079,8 @@ a { color: inherit; }
   .svc__intro { font-size: clamp(1rem, 1.3vw, 1.2rem); margin-top: 1.2rem; }
 }
 .svc-pin .svc__run { position: relative; }
-.svc-pin .svc__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; justify-items: stretch; }
+.svc-pin .svc__sticky { position: sticky; top: var(--barh, 4.5rem); height: calc(100vh - var(--barh, 4.5rem)); height: calc(100svh - var(--barh, 4.5rem)); display: grid; align-content: center; justify-items: stretch; }
+.js .svc-pin .panel.is-open { position: relative; top: auto; align-self: center; }
 .svc-pin .svc__sticky > .tl { transform: scale(var(--fit, .9)); transform-origin: 50% 50%; margin: 0; }
 .svc-pin .svc__ctl { position: absolute; top: .9rem; right: 0; margin: 0; z-index: 3; }
 .svc-pin .svc__bg { position: sticky; top: 0; height: 100vh; height: 100svh; margin-bottom: -100vh; margin-bottom: -100svh; }

@@ -268,7 +268,8 @@
     if (!want) { run.style.height = ''; tl.style.removeProperty('--fit'); return; }
     run.style.height = ((pin.M * PER + LEAD * 2 + 1) * 100).toFixed(1) + 'svh';
     const h = tl.offsetHeight || 880;
-    tl.style.setProperty('--fit', Math.min(0.9, (innerHeight - 28) / h).toFixed(3));
+    const bh = (document.querySelector('.bar') || {}).offsetHeight || 0;
+    tl.style.setProperty('--fit', Math.min(0.9, (innerHeight - bh - 36) / h).toFixed(3));
     pin.f = -1;
     pinUpdate();
   }

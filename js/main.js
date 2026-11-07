@@ -17,12 +17,12 @@
     const mark = stage.querySelector('.mark__f');
     const chaps = [...stage.querySelectorAll('.chap')];
     const scenes = [...stage.querySelectorAll('.s3')];
-    const idx = stage.querySelector('.s3__idx');
-    const dots = idx ? [...idx.children] : [];
+    const head = stage.querySelector('.s3__head');
+    const items = head ? [...head.querySelectorAll('li')] : [];
     // Tudo medido em "telas" de rolagem. [início, fim] de cada capítulo.
-    const SCREENS = 12.6, IN = .6, OUT = .5;
-    const range = [[.5, 1.95], [1.8, 3.15], [3.0, 4.5], [4.35, 5.4], [11.15, SCREENS]];
-    const S3_START = 5.25, S3_LEN = 1.0;
+    const S3_START = 4.4, S3_LEN = 1.0, N3 = scenes.length;
+    const SCREENS = S3_START + N3 * S3_LEN + 1.35, IN = .6, OUT = .5;
+    const range = [[.5, 1.95], [1.8, 3.15], [3.0, 4.5], [SCREENS - 1.45, SCREENS]];
     let ox = 0, oy = 0, maxR = 0, W = 0, H = 0, sz = 0, ticking = false;
 
     const measure = () => {
@@ -42,10 +42,9 @@
       const total = rect.height - innerHeight;
       const S = clamp(-rect.top, 0, total) / innerHeight;   // quantas telas já rolamos
       iris.style.clipPath = `circle(${(ease(clamp(S / .8)) * maxR * 1.02).toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)`;
-      // capítulos 1 a 4 e o final: os 5 primeiros itens de "range"
-      const order = [0, 1, 2, 3, 4];
+      // capítulos 1 a 3 e o final
       chaps.forEach((c, i) => {
-        const [s, e] = range[order[i]];
+        const [s, e] = range[i];
         const inn = clamp((S - s) / IN);
         const out = i === chaps.length - 1 ? 0 : clamp((S - (e - OUT)) / OUT);
         c.style.setProperty('--in', inn.toFixed(3));
@@ -63,14 +62,14 @@
         c.classList.toggle('on', live);
         if (live && u > .02 && u < .98) active = i;
       });
-      if (idx) {
-        idx.classList.toggle('on', active > -1);
-        dots.forEach((d, k) => d.classList.toggle('on', k === active));
+      if (head) {
+        head.classList.toggle('on', active > -1);
+        items.forEach((li, k) => { li.classList.toggle('is-act', k === active); li.classList.toggle('is-past', active > -1 && k < active); });
       }
-      const fill = clamp((S - 11.85) / .25);
+      const fill = clamp((S - (SCREENS - .75)) / .25);
       if (mark) mark.style.setProperty('--fillup', fill.toFixed(3));
       if (seal) {
-        const g = clamp((S - 12.1) / .5);
+        const g = clamp((S - (SCREENS - .5)) / .5);
         const full = (Math.hypot(W, H) / (sz || 1)) * 1.08;
         const sc = g <= 0 ? 0 : 1 + ease(g) * (full - 1);
         seal.style.setProperty('--sc', sc.toFixed(3));
