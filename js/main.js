@@ -7,22 +7,27 @@
   const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-  /* ---------- Íris: a página branca se abre a partir do "o" da marca ---------- */
+  /* ---------- Íris + história: a página abre a partir do "o" e a narrativa anda com a rolagem ---------- */
 
-  if (!reduce) {
+  {
     const pin = stage.querySelector('.pin');
     const iris = stage.querySelector('.iris');
-    const text = stage.querySelector('.iris__text');
     const o = stage.querySelector('.o-anchor');
-    let ox = 0, oy = 0, maxR = 0, ticking = false;
+    const seal = stage.querySelector('.seal');
+    const mark = stage.querySelector('.mark__f');
+    const chaps = [...stage.querySelectorAll('.chap')];
+    // [início, fim] de cada capítulo, em fração da rolagem do palco
+    const range = [[.03, .22], [.21, .38], [.37, .56], [.55, .73], [.72, 1]];
+    let ox = 0, oy = 0, maxR = 0, W = 0, H = 0, sz = 0, ticking = false;
 
     const measure = () => {
       const p = pin.getBoundingClientRect();
       const r = o.getBoundingClientRect();
       ox = r.left + r.width / 2 - p.left;
       oy = r.top + r.height / 2 - p.top;
-      const w = p.width, h = p.height;
-      maxR = Math.hypot(Math.max(ox, w - ox), Math.max(oy, h - oy));
+      W = p.width; H = p.height;
+      maxR = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));
+      sz = seal ? parseFloat(getComputedStyle(seal).width) : 0;
     };
 
     const draw = () => {
@@ -30,9 +35,23 @@
       const rect = stage.getBoundingClientRect();
       const total = rect.height - innerHeight;
       const p = clamp(-rect.top / total);
-      const radius = ease(clamp(p / .72)) * maxR * 1.02;
-      iris.style.clipPath = `circle(${radius.toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)`;
-      text.style.opacity = clamp((p - .3) / .35).toFixed(3);
+      iris.style.clipPath = `circle(${(ease(clamp(p / .07)) * maxR * 1.02).toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)`;
+      chaps.forEach((c, i) => {
+        const [s, e] = range[i];
+        const inn = clamp((p - s) / .07);
+        const out = i === chaps.length - 1 ? 0 : clamp((p - (e - .05)) / .05);
+        c.style.setProperty('--in', inn.toFixed(3));
+        c.style.setProperty('--out', out.toFixed(3));
+        c.classList.toggle('on', inn > 0 && out < 1);
+      });
+      const fill = clamp((p - .84) / .04);
+      if (mark) mark.style.setProperty('--fillup', fill.toFixed(3));
+      if (seal) {
+        const g = clamp((p - .88) / .10);
+        const full = (Math.hypot(W, H) / (sz || 1)) * 1.08;
+        const sc = g <= 0 ? 0 : 1 + ease(g) * (full - 1);
+        seal.style.setProperty('--sc', sc.toFixed(3));
+      }
     };
 
     const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } };
