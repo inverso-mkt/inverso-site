@@ -15,6 +15,7 @@
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="css/style.css">
 <script src="js/main.js" defer></script>
+<script src="js/servicos.js" defer></script>
 </head>
 <body>
 
@@ -28,6 +29,9 @@
   <a class="brand" href="#topo" aria-label="Inverso, início">
     <svg class="brand__logo" viewBox="0 0 2162.0 356.5" aria-hidden="true"><use href="#logo"/></svg>
   </a>
+  <nav class="bar__nav" aria-label="Seções">
+    <a href="#servicos">Serviços</a>
+  </nav>
   <a class="btn" href="https://www.instagram.com/inverso.mkt/" target="_blank" rel="noopener">Falar com a gente</a>
 </header>
 
@@ -61,6 +65,422 @@
         </div>
       </div>
 
+    </div>
+  </section>
+  <section class="svc" id="servicos" aria-labelledby="svc-title">
+    <div class="svc__bg" aria-hidden="true"><i class="orb orb--a"></i><i class="orb orb--b"></i><i class="orb orb--c"></i><span class="sym-big"></span></div>
+    <div class="svc__wrap">
+      <h2 class="svc__title" id="svc-title">O que a gente faz.</h2>
+      <p class="svc__intro">Oito frentes, na ordem em que acontecem. Escolha uma e veja como ela funciona na prática.</p>
+
+      <div class="tl" id="tl">
+
+        <p class="tl__label">Todo mês</p>
+
+        <button class="step" id="st-estrategia" type="button" aria-expanded="true" aria-controls="sv-estrategia">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">01</span>
+          <span class="step__t">Estratégia</span>
+          <span class="step__s">Primeiros 15 dias</span>
+        </button>
+        <section class="panel is-open" id="sv-estrategia" aria-labelledby="st-estrategia">
+          <header class="panel__top">
+            <p class="panel__n">01 / 08</p>
+            <h3>Estratégia</h3>
+            <p class="panel__lead">Antes de qualquer publicação, a gente entende o seu negócio e define para onde o perfil vai.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>De 3 a 4 reuniões, em cerca de 15 dias.</li>
+                <li>Briefing e análise do seu segmento.</li>
+                <li>Tom de voz e onboarding.</li>
+                <li>Metas (OKRs): o que mais importa no seu perfil nos próximos meses.</li>
+              </ul>
+              <p class="panel__get">Você recebe a estratégia do seu perfil antes de qualquer publicação.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="win">
+                  <div class="win__bar"><i></i><i></i><i></i><span>Inverso / Estratégia / Plano dos 15 dias</span></div>
+                  <div class="win__body">
+                    <p class="pg-title">Plano dos 15 dias</p>
+                    <div class="days">
+                      <span class="days__fill"></span>
+                      <b class="a" style="--i:0">Reunião 1</b><b class="a" style="--i:2">Reunião 2</b><b class="a" style="--i:4">Reunião 3</b><b class="a" style="--i:6">Reunião 4</b>
+                    </div>
+                    <ul class="todo">
+                      <li class="a" style="--i:1"><s class="cb"></s>Briefing</li>
+                      <li class="a" style="--i:3"><s class="cb"></s>Análise do segmento</li>
+                      <li class="a" style="--i:5"><s class="cb"></s>Tom de voz</li>
+                      <li class="a" style="--i:7"><s class="cb"></s>Onboarding</li>
+                      <li class="a" style="--i:9"><s class="cb"></s>Metas (OKRs)</li>
+                    </ul>
+                    <div class="okr">
+                      <div class="okr__row"><span>Meta 1</span><i style="--w:82%;--i:10"></i></div>
+                      <div class="okr__row"><span>Meta 2</span><i style="--w:58%;--i:11"></i></div>
+                      <div class="okr__row"><span>Meta 3</span><i style="--w:36%;--i:12"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chip chip--tr"><b>Reunião 3 de 4</b><span>amanhã, 10h</span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Redação <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-redacao" type="button" aria-expanded="false" aria-controls="sv-redacao">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">02</span>
+          <span class="step__t">Redação</span>
+          <span class="step__s">Pauta mensal de conteúdos</span>
+        </button>
+        <section class="panel" id="sv-redacao" aria-labelledby="st-redacao">
+          <header class="panel__top">
+            <p class="panel__n">02 / 08</p>
+            <h3>Redação</h3>
+            <p class="panel__lead">Os redatores transformam a estratégia em texto: o que será publicado, o que será dito em cada conteúdo e o que será falado nos vídeos.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>Parte do briefing, do tom de voz e das metas definidas na estratégia.</li>
+                <li>Monta a pauta mensal de conteúdos.</li>
+                <li>Escreve os textos e os roteiros de cada conteúdo.</li>
+              </ul>
+              <p class="panel__get">Você recebe a pauta do mês, os textos e os roteiros.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="win">
+                  <div class="win__bar"><i></i><i></i><i></i><span>Inverso / Redação / Pauta do mês</span></div>
+                  <div class="win__body">
+                    <p class="pg-title">Pauta do mês</p>
+                    <div class="tbl">
+                      <div class="tr tr--h"><span>Conteúdo</span><span>Formato</span><span>Status</span></div>
+                      <div class="tr a" style="--i:1"><span>Um mito sobre a rotina</span><span>Reels</span><span class="st" style="--i:1"><em>Ideia</em><em>Escrevendo</em><em>Aprovado</em></span></div>
+                      <div class="tr a" style="--i:2"><span>Bastidores da semana</span><span>Stories</span><span class="st" style="--i:2"><em>Ideia</em><em>Escrevendo</em><em>Aprovado</em></span></div>
+                      <div class="tr a" style="--i:3"><span>Pergunta da audiência</span><span>Carrossel</span><span class="st" style="--i:3"><em>Ideia</em><em>Escrevendo</em><em>Aprovado</em></span></div>
+                      <div class="tr a" style="--i:4"><span>Texto de apresentação</span><span>Feed</span><span class="st" style="--i:4"><em>Ideia</em><em>Escrevendo</em><em>Aprovado</em></span></div>
+                    </div>
+                    <div class="script">
+                      <p class="script__h">Roteiro / Reels</p>
+                      <p class="type" style="--n:26;--d:1.6s"><b>Gancho</b> uma frase curta que prende</p>
+                      <p class="type" style="--n:27;--d:2.8s"><b>Meio</b> a explicação, sem rodeio</p>
+                      <p class="type" style="--n:24;--d:4s"><b>Fim</b> o convite para agir<i class="caret"></i></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="chip chip--br"><b>Aprovado pelo cliente</b><span>pauta de hoje</span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Criação e design <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-criacao" type="button" aria-expanded="false" aria-controls="sv-criacao">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">03</span>
+          <span class="step__t">Criação e design</span>
+          <span class="step__s">Carrosséis, capas e destaques</span>
+        </button>
+        <section class="panel" id="sv-criacao" aria-labelledby="st-criacao">
+          <header class="panel__top">
+            <p class="panel__n">03 / 08</p>
+            <h3>Criação e design</h3>
+            <p class="panel__lead">A parte visual do perfil: o que você vê no feed, nas capas dos vídeos e nos destaques. E, quando faz sentido, também fora da rede, porque a comunicação não termina nela.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>O que a gente produz</h4>
+              <ul>
+                <li>Carrosséis para o feed.</li>
+                <li>Capas de vídeo.</li>
+                <li>Destaques do perfil.</li>
+                <li>Material impresso, como brindes, quando o projeto pede.</li>
+              </ul>
+              <p class="panel__get">Você recebe as peças prontas para publicar e, se houver, o material para levar para fora da rede.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="canvas">
+                  <div class="tools a" style="--i:0"><b>Aa</b><i></i><i></i><i class="on"></i><i></i></div>
+                  <div class="slides">
+                    <div class="slide slide--1 a" style="--i:1"><span class="sk bar--l"></span><span class="sk bar--l"></span><span class="sk bar--s"></span><span class="sym"></span>
+                      <span class="sel"><u></u><u></u><u></u><u></u></span>
+                    </div>
+                    <div class="slide slide--2 a" style="--i:3"><span class="ph"></span><span class="sk bar--s"></span><span class="sk bar--xs"></span></div>
+                    <div class="slide slide--3 a" style="--i:5"><span class="sk bar--s"></span><span class="sk bar--l"></span><span class="arrow">→</span></div>
+                  </div>
+                  <div class="extras">
+                    <div class="reel a" style="--i:7"><span class="ph"></span><span class="play"></span></div>
+                    <div class="hl a" style="--i:8"><span class="sym"></span></div>
+                    <div class="hl a" style="--i:9"><span class="sym sym--o"></span></div>
+                  </div>
+                </div>
+                <div class="chip chip--tl"><b>3 telas</b><span>carrossel, capa e destaque</span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Captação <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-captacao" type="button" aria-expanded="false" aria-controls="sv-captacao">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">04</span>
+          <span class="step__t">Captação de foto e vídeo</span>
+          <span class="step__s">A cada 15 dias</span>
+        </button>
+        <section class="panel" id="sv-captacao" aria-labelledby="st-captacao">
+          <header class="panel__top">
+            <p class="panel__n">04 / 08</p>
+            <h3>Captação de foto e vídeo</h3>
+            <p class="panel__lead">A gente grava e fotografa o seu trabalho para o perfil ter imagem própria, com a sua cara e o seu jeito.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>Captação marcada a cada 15 dias.</li>
+                <li>Roteiro pronto antes de ligar a câmera.</li>
+                <li>Fotos e vídeos pensados para virar os conteúdos do mês.</li>
+              </ul>
+              <p class="panel__get">Você recebe fotos e vídeos prontos para entrar na pauta.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="vf">
+                  <span class="vf__c vf__c--tl"></span><span class="vf__c vf__c--tr"></span><span class="vf__c vf__c--bl"></span><span class="vf__c vf__c--br"></span>
+                  <span class="vf__rec"><i></i>REC</span>
+                  <span class="vf__grid"></span>
+                  <span class="vf__subject"><i></i><b></b></span>
+                  <span class="vf__focus"></span>
+                  <span class="vf__flash"></span>
+                </div>
+                <div class="shots">
+                  <span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span><span style="--i:3"></span><span style="--i:4"></span>
+                </div>
+                <div class="chip chip--tr cal"><b>A cada 15 dias</b><span class="cal__d"><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Social media <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-social" type="button" aria-expanded="false" aria-controls="sv-social">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">05</span>
+          <span class="step__t">Storymaker e social media</span>
+          <span class="step__s">De segunda a sexta</span>
+        </button>
+        <section class="panel" id="sv-social" aria-labelledby="st-social">
+          <header class="panel__top">
+            <p class="panel__n">05 / 08</p>
+            <h3>Storymaker e social media</h3>
+            <p class="panel__lead">Uma profissional acompanha você todos os dias úteis. Ela conversa com você, apresenta a pauta do dia e monta os stories em tempo real, junto com você.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>De segunda a sexta, contato diário com você.</li>
+                <li>Apresentação da pauta do dia.</li>
+                <li>Stories montados na hora, com a sua participação.</li>
+              </ul>
+              <p class="panel__get">Você recebe stories todos os dias úteis e uma comunicação sempre ativa com a equipe.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="duo">
+                  <div class="chat">
+                    <p class="chat__h">Pauta de hoje</p>
+                    <p class="msg msg--in a" style="--i:1">Bom dia! Hoje a pauta é bastidores da semana.</p>
+                    <p class="msg msg--in a" style="--i:3">Dá para gravar às 10h?</p>
+                    <p class="msg msg--out a" style="--i:5">Dá sim. Já separei o material.</p>
+                    <p class="msg msg--in a" style="--i:7">Perfeito. Já estou montando.</p>
+                    <p class="typing a" style="--i:8"><i></i><i></i><i></i></p>
+                  </div>
+                  <div class="phone">
+                    <div class="story">
+                      <span class="story__bars"><i></i><i></i><i></i></span>
+                      <span class="story__who"><b class="sym"></b>suamarca <em>agora</em></span>
+                      <span class="story__big">Bastidores<br>da semana</span>
+                      <span class="poll"><em>Enquete</em><i style="--w:68%"></i><i style="--w:32%"></i></span>
+                      <span class="story__msg">Enviar mensagem</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="days5"><b>S</b><b>T</b><b>Q</b><b>Q</b><b>S</b></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Tráfego pago <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-trafego" type="button" aria-expanded="false" aria-controls="sv-trafego">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">06</span>
+          <span class="step__t">Tráfego pago e métricas</span>
+          <span class="step__s">Revisão todo mês</span>
+        </button>
+        <section class="panel" id="sv-trafego" aria-labelledby="st-trafego">
+          <header class="panel__top">
+            <p class="panel__n">06 / 08</p>
+            <h3>Tráfego pago e métricas</h3>
+            <p class="panel__lead">A gente leva os conteúdos para mais gente e acompanha os números. No fim de cada mês, as métricas voltam para a estratégia.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>Tráfego pago para levar os conteúdos a mais gente.</li>
+                <li>Acompanhamento dos números durante o mês.</li>
+                <li>Revisão todo mês: o que deu resultado fica, o que não deu, muda.</li>
+              </ul>
+              <p class="panel__get">Você recebe uma revisão mensal, explicada sem termo técnico.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="win win--dark">
+                  <div class="win__bar"><i></i><i></i><i></i><span>Campanhas / Visão geral</span></div>
+                  <div class="win__body">
+                    <div class="kpis">
+                      <div class="kpi a" style="--i:0"><span>Alcance</span><svg viewBox="0 0 60 20"><path class="draw" pathLength="1" d="M0 16 L12 12 L24 14 L36 7 L48 9 L60 2" style="--len:80"/></svg></div>
+                      <div class="kpi a" style="--i:1"><span>Cliques</span><svg viewBox="0 0 60 20"><path class="draw" pathLength="1" d="M0 14 L12 15 L24 9 L36 10 L48 5 L60 4" style="--len:80"/></svg></div>
+                      <div class="kpi a" style="--i:2"><span>Conversas</span><svg viewBox="0 0 60 20"><path class="draw" pathLength="1" d="M0 17 L12 14 L24 15 L36 11 L48 8 L60 5" style="--len:80"/></svg></div>
+                    </div>
+                    <div class="chart">
+                      <svg viewBox="0 0 300 110" preserveAspectRatio="none"><path class="area" d="M0 95 C40 90 60 70 100 72 S170 40 210 44 S270 20 300 10 L300 110 L0 110Z"/><path class="draw line" pathLength="1" d="M0 95 C40 90 60 70 100 72 S170 40 210 44 S270 20 300 10" style="--len:420"/></svg>
+                      <span class="dot"></span>
+                    </div>
+                    <div class="funnel">
+                      <p class="a" style="--i:5"><em>Viu o anúncio</em><i style="--w:100%"></i></p>
+                      <p class="a" style="--i:6"><em>Clicou</em><i style="--w:62%"></i></p>
+                      <p class="a" style="--i:7"><em>Chamou no direct</em><i style="--w:34%"></i></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="chip chip--bl"><b>Revisão do mês</b><span class="tags"><em>Mantém</em><em class="o">Ajusta</em></span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa, sem dados reais</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Identidade visual <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <p class="tl__label">Sob projeto</p>
+
+        <button class="step" id="st-marca" type="button" aria-expanded="false" aria-controls="sv-marca">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">07</span>
+          <span class="step__t">Identidade visual e manual de marca</span>
+          <span class="step__s">Do símbolo ao manual</span>
+        </button>
+        <section class="panel" id="sv-marca" aria-labelledby="st-marca">
+          <header class="panel__top">
+            <p class="panel__n">07 / 08</p>
+            <h3>Identidade visual e manual de marca</h3>
+            <p class="panel__lead">Para a sua marca ter cara própria e ser reconhecida em qualquer lugar: do perfil ao cartão de visita.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>O que entra no projeto</h4>
+              <ul>
+                <li>Símbolo e logotipo, com rodadas de revisão.</li>
+                <li>Paleta de cores e tipografia.</li>
+                <li>Aplicações da marca: redes sociais, site e material impresso.</li>
+                <li>Manual de marca, com as regras de uso.</li>
+              </ul>
+              <p class="panel__get">Você recebe os arquivos da marca em SVG, PDF e PNG, e o manual para guardar.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="bnd">
+                  <div class="bnd__grid">
+                    <svg viewBox="0 0 120 120">
+                      <rect class="draw" pathLength="1" x="10" y="10" width="100" height="100" style="--len:400"/>
+                      <circle class="draw" pathLength="1" cx="60" cy="60" r="38" style="--len:240"/>
+                      <path class="draw" pathLength="1" d="M60 10 V110 M10 60 H110" style="--len:200"/>
+                      <path class="draw" pathLength="1" d="M10 10 L110 110 M110 10 L10 110" style="--len:290;opacity:.35"/>
+                      <path class="fillhalf" d="M22 60 a38 38 0 0 0 76 0 Z"/>
+                    </svg>
+                  </div>
+                  <div class="bnd__side">
+                    <div class="sw"><i class="a" style="--i:4;background:#000"></i><i class="a" style="--i:5;background:#4a4a4a"></i><i class="a" style="--i:6;background:#9a9a9a"></i><i class="a" style="--i:7;background:#e6e6e6"></i><i class="a" style="--i:8;background:#fff"></i></div>
+                    <div class="type-s">
+                      <p class="a" style="--i:9"><b>Aa</b> 800</p>
+                      <p class="a" style="--i:10"><b class="m">Aa</b> 500</p>
+                      <p class="a" style="--i:11"><b class="l">Aa</b> 300</p>
+                    </div>
+                    <div class="vers a" style="--i:12"><span><i class="sym"></i></span><span class="neg"><i class="sym"></i></span><em>Positivo e negativo</em></div>
+                  </div>
+                </div>
+                <div class="chip chip--tr"><b>Manual de marca</b><span>regras de uso</span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Próxima: Cursos e infoprodutos <span aria-hidden="true">→</span></button></footer>
+        </section>
+
+        <button class="step" id="st-cursos" type="button" aria-expanded="false" aria-controls="sv-cursos">
+          <span class="step__dot" aria-hidden="true"></span>
+          <span class="step__n">08</span>
+          <span class="step__t">Cursos e infoprodutos</span>
+          <span class="step__s">Videoaulas em módulos</span>
+        </button>
+        <section class="panel" id="sv-cursos" aria-labelledby="st-cursos">
+          <header class="panel__top">
+            <p class="panel__n">08 / 08</p>
+            <h3>Cursos e infoprodutos</h3>
+            <p class="panel__lead">Para quem quer transformar o que sabe em um curso: a gente organiza o conteúdo, roteiriza e grava as aulas.</p>
+          </header>
+          <div class="panel__grid">
+            <div class="panel__info">
+              <h4>Como funciona</h4>
+              <ul>
+                <li>Estrutura do curso em módulos.</li>
+                <li>Roteiro de cada aula.</li>
+                <li>Gravação e edição das videoaulas.</li>
+              </ul>
+              <p class="panel__get">Você recebe as aulas gravadas e editadas, organizadas por módulo.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="scene__tilt">
+                <div class="win">
+                  <div class="win__bar"><i></i><i></i><i></i><span>Curso / Área de aulas</span></div>
+                  <div class="course">
+                    <ul class="mods">
+                      <li class="a" style="--i:1"><s class="cb"></s>Apresentação</li>
+                      <li class="a" style="--i:3"><s class="cb"></s>Antes de começar</li>
+                      <li class="a" style="--i:5"><s class="cb"></s>Passo a passo</li>
+                      <li class="a cur" style="--i:7"><s class="cb"></s>Prática</li>
+                      <li class="a" style="--i:8"><s class="cb cb--o"></s>Próximos passos</li>
+                    </ul>
+                    <div class="player">
+                      <div class="player__v"><span class="play"></span></div>
+                      <div class="player__bar"><i></i></div>
+                      <p class="player__t">Módulo 4: Prática</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="chip chip--br ring"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15"/><circle class="r" cx="18" cy="18" r="15"/></svg><b>Módulos</b><span>5 aulas</span></div>
+              </div>
+              <span class="scene__cap">Simulação ilustrativa</span>
+            </div>
+          </div>
+          <footer class="panel__foot"><button class="next" type="button" data-next>Voltar para o início <span aria-hidden="true">↑</span></button></footer>
+        </section>
+
+      </div>
     </div>
   </section>
 </main>
