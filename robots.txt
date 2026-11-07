@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://inverso-mkt.netlify.app/sitemap.xml
