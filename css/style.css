@@ -199,7 +199,7 @@ a { color: inherit; }
   width: min(86vw, 52vh); aspect-ratio: 1; --R: 38%;
   --spin: calc(var(--in) * 40deg);
   --tilt: 58deg;
-  transform-style: preserve-3d; transform: perspective(1100px) rotateX(var(--tilt));
+  transform-style: preserve-3d; transform: perspective(1700px) rotateX(var(--tilt));
 }
 .orbit__ring { position: absolute; inset: 12%; border: 1px dashed rgba(0,0,0,.35); border-radius: 50%; transform: rotate(var(--spin)); }
 .orbit__core { position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; margin: -11% 0 0 -11%; display: grid; place-items: center; gap: .1rem; align-content: center; text-align: center; font-size: .72rem; font-weight: 700; border-radius: 50%; background: var(--black); color: var(--white); }
