@@ -141,9 +141,9 @@ a { color: inherit; }
 .story { padding: clamp(4.5rem, 10vh, 7rem) var(--pad); display: grid; gap: clamp(4rem, 10vh, 7rem); }
 .chap { display: grid; gap: 1.5rem; align-content: center; }
 .chap__kicker { font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; opacity: .6; margin: 0; }
-.chap__big { margin: 0; font-weight: 800; font-size: clamp(2.6rem, 8.4vw, 8.25rem); line-height: .98; letter-spacing: -.045em; max-width: 12ch; }
-.chap__big--m { font-size: clamp(2.3rem, 6.2vw, 6.4rem); }
-.chap__big--c { max-width: none; text-align: center; font-size: clamp(2.4rem, 7vw, 7rem); }
+.chap__big { margin: 0; font-weight: 800; font-size: clamp(2.4rem, 6.9vw, 6.6rem); line-height: .98; letter-spacing: -.045em; max-width: 12ch; }
+.chap__big--m { font-size: clamp(2.2rem, 5.2vw, 5.2rem); }
+.chap__big--c { max-width: none; text-align: center; font-size: clamp(2.2rem, 5.8vw, 5.8rem); }
 .chap__aside { font-weight: 500; font-size: clamp(1.05rem, 1.55vw, 1.4rem); line-height: 1.4; letter-spacing: -.01em; max-width: 26rem; }
 .chap__lines { display: grid; gap: .9rem; max-width: 38rem; font-weight: 500; font-size: clamp(1.05rem, 1.7vw, 1.55rem); line-height: 1.35; letter-spacing: -.01em; }
 .chap__lines p:nth-child(2) { font-weight: 300; }
@@ -157,7 +157,7 @@ a { color: inherit; }
 .wlist { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
 .wlist li { display: flex; align-items: baseline; gap: 1rem; }
 .wlist li > span { width: 2rem; font-size: .8rem; font-weight: 700; letter-spacing: .1em; opacity: .5; }
-.wlist b { position: relative; font-weight: 800; font-size: clamp(2.2rem, 6.6vw, 6.4rem); line-height: 1.02; letter-spacing: -.045em; color: transparent; -webkit-text-stroke: 1.5px var(--black); }
+.wlist b { position: relative; font-weight: 800; font-size: clamp(2rem, 5.2vw, 5rem); line-height: 1.02; letter-spacing: -.045em; color: transparent; -webkit-text-stroke: 1.5px var(--black); }
 .wlist b::after { content: attr(data-t); position: absolute; left: 0; top: 0; color: var(--black); -webkit-text-stroke: 0; clip-path: inset(0 calc((1 - var(--f, 1)) * 100%) 0 0); }
 .mark { display: none; }
 
