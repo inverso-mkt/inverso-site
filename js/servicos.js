@@ -12,10 +12,12 @@
 
   // Mede a posição das bolinhas e ajusta a linha (funciona igual no desktop e no acordeão do celular)
   function measure() {
-    const top = tl.getBoundingClientRect().top;
+    const tr = tl.getBoundingClientRect();
+    const top = tr.top;
+    const k = tl.offsetHeight ? tr.height / tl.offsetHeight : 1;   // a escala do modo fixo não pode entrar na conta
     const center = (i) => {
       const r = steps[i].querySelector('.step__dot').getBoundingClientRect();
-      return r.top - top + r.height / 2;
+      return (r.top - top + r.height / 2) / k;
     };
     const a = center(0);
     const b = center(steps.length - 1);
@@ -48,7 +50,7 @@
 
   steps.forEach((s, i) => {
     s.style.setProperty('--k', i);
-    s.addEventListener('click', () => select(i, { scroll: !desktop.matches }));
+    s.addEventListener('click', () => (pin.on ? goTopic(i) : select(i, { scroll: !desktop.matches })));
     s.addEventListener('keydown', (e) => {
       const keys = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
       let n = null;
@@ -57,7 +59,7 @@
       else if (e.key === 'End') n = steps.length - 1;
       if (n === null) return;
       e.preventDefault();
-      select(n, { focus: true });
+      if (pin.on) { goTopic(n); steps[n].focus({ preventScroll: true }); } else select(n, { focus: true });
     });
   });
   tl.querySelectorAll('.tl__label').forEach((l, k) => l.style.setProperty('--k', k * 4));
@@ -65,7 +67,7 @@
   panels.forEach((p, i) => {
     p.querySelector('[data-next]')?.addEventListener('click', () => {
       const n = (i + 1) % steps.length;
-      select(n, { focus: true, scroll: true });
+      if (pin.on) goTopic(n); else select(n, { focus: true, scroll: true });
     });
     // Brilho do vidro que acompanha o mouse
     if (fine && !reduce) {
@@ -203,10 +205,18 @@
       new IntersectionObserver((es) => { inView = es.some((e) => e.isIntersecting); sync(); }, { threshold: 0.25 }).observe(stage);
     } else { inView = true; }
     show(0, true);
-    return { sync, stop: () => { tok++; running = false; } };
+    function go(i) {
+      if (i === idx && locked) return;
+      locked = true;
+      p.classList.remove('is-auto');
+      idx = i;
+      if (running) loop(++tok); else show(i, true);
+    }
+    return { sync, go, stop: () => { tok++; running = false; } };
   }
 
-  panels.forEach((p) => { const c = initEngine(p); if (c) controllers.push(c); });
+  const byPanel = panels.map((p) => initEngine(p));
+  byPanel.forEach((c) => { if (c) controllers.push(c); });
   const syncAll = () => controllers.forEach((c) => c.sync());
   document.addEventListener('visibilitychange', () => { eng.tab = !document.hidden; syncAll(); });
   if (pauseBtn) {
@@ -238,5 +248,66 @@
 
   addEventListener('resize', measure);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    /* ---------- Rolagem que passa de tópico em tópico e de subtópico em subtópico ---------- */
+  const pin = { on: false, M: 0, first: [], f: -1 };
+  const run = document.getElementById('svc-run');
+  const sticky = run && run.querySelector('.svc__sticky');
+  const mqPin = matchMedia('(min-width: 64rem) and (min-height: 560px)');
+  const PER = 0.34;   // telas de rolagem por subtópico
+  const LEAD = 0.5;   // folga no começo e no fim
+
+  function pinLayout() {
+    if (!run) return;
+    const want = mqPin.matches;
+    const counts = panels.map((p) => p.querySelectorAll('.sb').length || 1);
+    pin.first = []; let acc = 0;
+    counts.forEach((c) => { pin.first.push(acc); acc += c; });
+    pin.M = acc; pin.counts = counts;
+    svcRoot.classList.toggle('svc-pin', want);
+    pin.on = want;
+    if (!want) { run.style.height = ''; tl.style.removeProperty('--fit'); return; }
+    run.style.height = ((pin.M * PER + LEAD * 2 + 1) * 100).toFixed(1) + 'svh';
+    const h = tl.offsetHeight || 880;
+    tl.style.setProperty('--fit', Math.min(0.9, (innerHeight - 28) / h).toFixed(3));
+    pin.f = -1;
+    pinUpdate();
+  }
+
+  function runTop() { return run.getBoundingClientRect().top + scrollY; }
+  function scrollSpan() { return run.offsetHeight - innerHeight; }
+
+  function pinUpdate() {
+    if (!pin.on) return;
+    const span = scrollSpan();
+    const y = scrollY - runTop();
+    const lead = LEAD * innerHeight;
+    const body = span - lead * 2;
+    const rel = Math.min(Math.max((y - lead) / body, 0), 0.99999);
+    const f = Math.floor(rel * pin.M);
+    if (f === pin.f) return;
+    pin.f = f;
+    let t = 0; while (t + 1 < panels.length && pin.first[t + 1] <= f) t++;
+    const sub = f - pin.first[t];
+    if (t !== cur) select(t);
+    const c = byPanel[t];
+    if (c) c.go(sub);
+  }
+
+  function goTopic(i) {
+    if (!pin.on) return select(i);
+    const span = scrollSpan();
+    const lead = LEAD * innerHeight, body = span - lead * 2;
+    const target = runTop() + lead + body * ((pin.first[i] + 0.5) / pin.M);
+    scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  let pinTick = false;
+  addEventListener('scroll', () => { if (!pinTick) { pinTick = true; requestAnimationFrame(() => { pinTick = false; pinUpdate(); }); } }, { passive: true });
+  addEventListener('resize', pinLayout);
+  mqPin.addEventListener('change', pinLayout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(pinLayout);
+  addEventListener('load', pinLayout);
+
   select(0);
+  pinLayout();
 })();
