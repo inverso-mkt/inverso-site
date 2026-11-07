@@ -37,7 +37,7 @@
     scope.querySelectorAll(TARGET).forEach(fixEl);
   }
 
-  /* 2. Formulário de contato (Netlify Forms) */
+  /* 2. Formulário de contato (envia para /api/contato, a função da Cloudflare) */
   function bindForms() {
     document.querySelectorAll('form.fm').forEach(form => {
       const box = form.closest('.ct__box');
@@ -54,8 +54,9 @@
         label.textContent = 'Enviando…';
         try {
           const body = new URLSearchParams(new FormData(form)).toString();
-          const r = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
-          if (!r.ok) throw new Error(r.status);
+          const r = await fetch('/api/contato', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }, body });
+          const j = await r.json().catch(() => ({}));
+          if (!r.ok || !j.ok) throw new Error(r.status);
           form.hidden = true;
           if (ok) { ok.hidden = false; ok.focus(); }
           form.reset();
