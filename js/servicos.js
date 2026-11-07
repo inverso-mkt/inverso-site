@@ -97,7 +97,7 @@
   /* ---------- Motor das cenas: passos, cursor guia, repetição ---------- */
   const reduceMotion = reduce;
   const pauseBtn = document.getElementById('svc-pause');
-  const eng = { paused: reduceMotion, tab: !document.hidden };
+  const eng = { paused: false, tab: !document.hidden };
   const svcRoot = document.getElementById('servicos');
   const controllers = [];
   const CUR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5l.2 17.6 4.6-4.3 3.3 7.5 3.1-1.4-3.3-7.3 6.4-.6z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>';
@@ -212,13 +212,11 @@
   if (pauseBtn) {
     const label = () => {
       pauseBtn.setAttribute('aria-pressed', String(eng.paused));
-      pauseBtn.querySelector('span').textContent = eng.paused ? (reduceMotion ? 'Reproduzir animações' : 'Retomar animações') : 'Pausar animações';
+      pauseBtn.querySelector('span').textContent = eng.paused ? 'Retomar animações' : 'Pausar animações';
     };
     label();
     pauseBtn.addEventListener('click', () => {
       eng.paused = !eng.paused;
-      // quem pediu menos movimento no sistema só vê movimento se clicar aqui
-      if (svcRoot) svcRoot.classList.toggle('anim-on', !eng.paused);
       label();
       syncAll();
     });

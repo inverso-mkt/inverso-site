@@ -900,7 +900,6 @@ a { color: inherit; }
 .cover .ic, .chk .ic { width: 1.6em; height: 1.6em; }
 .js .sub:not(.is-on) * { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
-  .svc:not(.anim-on) .sub { transition: none; }
 }
 
 .bx.inv { background: #fff; }
@@ -943,7 +942,8 @@ a { color: inherit; }
   html { scroll-behavior: auto; }
   .js .wordmark svg, .js .hero__copy { animation: none; }
   .btn { transition: none; }
-  .svc:not(.anim-on) *, .svc:not(.anim-on) *::before, .svc:not(.anim-on) *::after { animation: none !important; transition: none !important; }
+  /* Só o entorno fica parado; as cenas dos serviços rodam sempre, com o botão de pausa visível */
+  .svc *:not(.scene):not(.scene *), .svc *:not(.scene):not(.scene *)::before, .svc *:not(.scene):not(.scene *)::after { animation: none !important; transition: none !important; }
   .js .tl:not(.in) .step, .js .tl:not(.in) .tl__label, .js .tl:not(.in) .panel { opacity: 1; transform: none; }
   .js .tl:not(.in)::before { transform: none; }
   .chip { transform: translateZ(0); }
