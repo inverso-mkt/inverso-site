@@ -16,8 +16,13 @@
     const seal = stage.querySelector('.seal');
     const mark = stage.querySelector('.mark__f');
     const chaps = [...stage.querySelectorAll('.chap')];
-    // [início, fim] de cada capítulo, em fração da rolagem do palco
-    const range = [[.03, .22], [.21, .38], [.37, .56], [.55, .73], [.72, 1]];
+    const scenes = [...stage.querySelectorAll('.s3')];
+    const idx = stage.querySelector('.s3__idx');
+    const dots = idx ? [...idx.children] : [];
+    // Tudo medido em "telas" de rolagem. [início, fim] de cada capítulo.
+    const SCREENS = 12.6, IN = .6, OUT = .5;
+    const range = [[.5, 1.95], [1.8, 3.15], [3.0, 4.5], [4.35, 5.4], [11.15, SCREENS]];
+    const S3_START = 5.25, S3_LEN = 1.0;
     let ox = 0, oy = 0, maxR = 0, W = 0, H = 0, sz = 0, ticking = false;
 
     const measure = () => {
@@ -28,26 +33,44 @@
       W = p.width; H = p.height;
       maxR = Math.hypot(Math.max(ox, W - ox), Math.max(oy, H - oy));
       sz = seal ? parseFloat(getComputedStyle(seal).width) : 0;
+      stage.style.height = ((SCREENS + 1) * 100) + 'vh';
     };
 
     const draw = () => {
       ticking = false;
       const rect = stage.getBoundingClientRect();
       const total = rect.height - innerHeight;
-      const p = clamp(-rect.top / total);
-      iris.style.clipPath = `circle(${(ease(clamp(p / .07)) * maxR * 1.02).toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)`;
+      const S = clamp(-rect.top, 0, total) / innerHeight;   // quantas telas já rolamos
+      iris.style.clipPath = `circle(${(ease(clamp(S / .8)) * maxR * 1.02).toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)`;
+      // capítulos 1 a 4 e o final: os 5 primeiros itens de "range"
+      const order = [0, 1, 2, 3, 4];
       chaps.forEach((c, i) => {
-        const [s, e] = range[i];
-        const inn = clamp((p - s) / .07);
-        const out = i === chaps.length - 1 ? 0 : clamp((p - (e - .05)) / .05);
+        const [s, e] = range[order[i]];
+        const inn = clamp((S - s) / IN);
+        const out = i === chaps.length - 1 ? 0 : clamp((S - (e - OUT)) / OUT);
         c.style.setProperty('--in', inn.toFixed(3));
         c.style.setProperty('--out', out.toFixed(3));
         c.classList.toggle('on', inn > 0 && out < 1);
       });
-      const fill = clamp((p - .84) / .04);
+      // cenas 3D: uma por tópico, na ordem
+      let active = -1;
+      scenes.forEach((c, i) => {
+        const u = clamp((S - (S3_START + i * S3_LEN)) / S3_LEN);
+        const live = S >= S3_START + i * S3_LEN - .02 && S <= S3_START + (i + 1) * S3_LEN + .02;
+        c.style.setProperty('--u', u.toFixed(4));
+        c.style.setProperty('--si', clamp(u / .26).toFixed(3));
+        c.style.setProperty('--so', (i === scenes.length - 1 ? clamp((u - .86) / .14) : clamp((u - .8) / .2)).toFixed(3));
+        c.classList.toggle('on', live);
+        if (live && u > .02 && u < .98) active = i;
+      });
+      if (idx) {
+        idx.classList.toggle('on', active > -1);
+        dots.forEach((d, k) => d.classList.toggle('on', k === active));
+      }
+      const fill = clamp((S - 11.85) / .25);
       if (mark) mark.style.setProperty('--fillup', fill.toFixed(3));
       if (seal) {
-        const g = clamp((p - .88) / .10);
+        const g = clamp((S - 12.1) / .5);
         const full = (Math.hypot(W, H) / (sz || 1)) * 1.08;
         const sc = g <= 0 ? 0 : 1 + ease(g) * (full - 1);
         seal.style.setProperty('--sc', sc.toFixed(3));
