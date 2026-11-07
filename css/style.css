@@ -517,8 +517,8 @@ a { color: inherit; }
   .panel__top { grid-column: 1; grid-row: 1; }
   .panel__grid { display: contents; }
   .panel__info { grid-column: 1; grid-row: 2; margin-top: 1.5rem; }
-  .scene { order: 0; grid-column: 2; grid-row: 1 / span 2; align-self: center; }
-  .panel__foot { grid-column: 1 / -1; grid-row: 3; }
+  .scene { order: 0; grid-column: 2; grid-row: 1 / -1; align-self: center; }
+  .panel__foot { grid-column: 1; grid-row: 3; }
 }
 
 /* @@SCENES@@ */
@@ -941,12 +941,15 @@ a { color: inherit; }
 
 /* ===== Lote 3: funil 3D, mockups 3D, livro, ajustes ===== */
 .f3w { position: relative; display: grid; place-items: center; align-self: stretch; }
-.f3d { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 .9em .8em rgba(0,0,0,.45)); }
+.f3d { width: 100%; max-width: 15.5em; height: auto; overflow: visible; filter: drop-shadow(0 .7em .6em rgba(0,0,0,.28)); }
 .ftier .fk { opacity: calc(1 - var(--v)); transition: opacity .6s var(--ease); }
-.ftxt { font: 800 9px Montserrat, sans-serif; fill: #000; letter-spacing: .02em; paint-order: stroke; stroke: rgba(255,255,255,.55); stroke-width: 2px; }
-.ftier .fk ~ .ftxt { fill: #000; }
-.fdrop { fill: #000; stroke: #fff; stroke-width: 1; animation: fdrop 3.4s cubic-bezier(.45,0,.7,1) infinite; opacity: 0; }
-@keyframes fdrop { 0% { transform: translateY(0) scale(1); opacity: 0; } 8% { opacity: 1; } 50% { transform: translateY(80px) scale(.8); opacity: 1; } 78% { transform: translateY(150px) scale(.45); opacity: 1; } 100% { transform: translateY(176px) scale(.25); opacity: 0; } }
+.ftxt { font: 800 9.5px Montserrat, sans-serif; letter-spacing: .02em; }
+.ftxt.fw { fill: #fff; opacity: calc(1 - var(--v)); transition: opacity .6s var(--ease); }
+.ftxt.fb { fill: #000; opacity: var(--v); transition: opacity .6s var(--ease); }
+.fdrop { fill: #fff; stroke: #000; stroke-width: 1.4; animation: fdrop 3.4s cubic-bezier(.45,0,.7,1) infinite; opacity: 0; transform-box: fill-box; transform-origin: center; }
+@keyframes fdrop { 0% { transform: translate(var(--dx), 0) scale(1); opacity: 0; } 12% { opacity: 1; } 55% { transform: translate(calc(var(--dx) * .5), 44px) scale(.85); opacity: 1; } 100% { transform: translate(calc(var(--dx) * .2), 62px) scale(.7); opacity: 1; } }
+.fout { fill: #000; opacity: 0; transform-box: fill-box; transform-origin: center; animation: fout 3.4s cubic-bezier(.4,0,.8,1) infinite; animation-delay: 1.2s; }
+@keyframes fout { 0% { transform: translateY(-6px) scale(.4); opacity: 0; } 20% { opacity: 1; transform: translateY(0) scale(1); } 100% { transform: translateY(26px) scale(.7); opacity: 0; } }
 
 .chk2 { position: absolute; left: 18.4em; top: 2.6em; right: 1.4em; display: flex; flex-direction: column; gap: .9em; }
 .chk2 .row { align-items: flex-start; gap: .7em; }
@@ -1038,6 +1041,7 @@ a { color: inherit; }
 .chk2 .ck::before { border-color: #000; }
 .hls .hl { width: 4.2em; height: 4.2em; }
 .hls .hlw { font-size: .8em; }
+.ftier[style*="--t:3"] .ftxt { font-size: 7.6px; letter-spacing: 0; }
 
 /* ---------- Rodapé ---------- */
 
@@ -1080,7 +1084,7 @@ a { color: inherit; }
 }
 .svc-pin .svc__run { position: relative; }
 .svc-pin .svc__sticky { position: sticky; top: var(--barh, 4.5rem); height: calc(100vh - var(--barh, 4.5rem)); height: calc(100svh - var(--barh, 4.5rem)); display: grid; align-content: center; justify-items: stretch; }
-.js .svc-pin .panel.is-open { position: relative; top: auto; align-self: center; }
+.js .svc-pin .panel.is-open { position: relative; top: auto; align-self: center; min-height: var(--ph, 0); grid-template-rows: auto minmax(0, 1fr) auto; }
 .svc-pin .svc__sticky > .tl { transform: scale(var(--fit, .9)); transform-origin: 50% 50%; margin: 0; }
-.svc-pin .svc__ctl { position: absolute; top: .9rem; right: 0; margin: 0; z-index: 3; }
+.svc-pin .svc__ctl { position: absolute; top: .35rem; right: 0; margin: 0; z-index: 3; }
 .svc-pin .svc__bg { position: sticky; top: 0; height: 100vh; height: 100svh; margin-bottom: -100vh; margin-bottom: -100svh; }

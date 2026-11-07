@@ -265,11 +265,20 @@
     pin.M = acc; pin.counts = counts;
     svcRoot.classList.toggle('svc-pin', want);
     pin.on = want;
-    if (!want) { run.style.height = ''; tl.style.removeProperty('--fit'); return; }
+    if (!want) { run.style.height = ''; tl.style.removeProperty('--fit'); tl.style.removeProperty('--ph'); return; }
     run.style.height = ((pin.M * PER + LEAD * 2 + 1) * 100).toFixed(1) + 'svh';
+    // O cartão tem a mesma altura em todos os serviços e subtópicos: não pula quando o texto muda
+    tl.style.removeProperty('--ph');
+    let ph = 0;
+    panels.forEach((p, k) => {
+      panels.forEach((q, m) => q.classList.toggle('is-open', m === k));
+      ph = Math.max(ph, p.offsetHeight);
+    });
+    panels.forEach((q, m) => q.classList.toggle('is-open', m === cur));
+    tl.style.setProperty('--ph', ph + 'px');
     const h = tl.offsetHeight || 880;
     const bh = (document.querySelector('.bar') || {}).offsetHeight || 0;
-    tl.style.setProperty('--fit', Math.min(0.9, (innerHeight - bh - 36) / h).toFixed(3));
+    tl.style.setProperty('--fit', Math.min(0.9, (innerHeight - bh - 84) / h).toFixed(3));
     pin.f = -1;
     pinUpdate();
   }
