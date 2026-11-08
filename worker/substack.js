@@ -72,10 +72,12 @@ export async function substack(request, env, url, ctx) {
   let xml;
   try {
     const r = await fetch(base.replace(/\/+$/, '') + '/feed', { headers: { Accept: 'application/rss+xml, application/xml, text/xml' }, cf: { cacheTtl: 600 } });
+    if (url.searchParams.get('dbg') === '1') return new Response(JSON.stringify({status: r.status, ct: r.headers.get('content-type'), len: (await r.text()).length}), { headers: { 'Content-Type': 'application/json' } });
     if (!r.ok) return empty();
     xml = await r.text();
   } catch (e) {
     console.error('substack: falha ao ler o feed', String(e));
+    if (url.searchParams.get('dbg') === '1') return new Response(JSON.stringify({erro: String(e)}), { headers: { 'Content-Type': 'application/json' } });
     return empty();
   }
 
