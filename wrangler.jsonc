@@ -9,5 +9,8 @@
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
   },
+  "kv_namespaces": [
+    { "binding": "DEPOIMENTOS", "id": "7a7a807667e043f5a7d477c26762373e" }
+  ],
   "observability": { "enabled": true }
 }

@@ -54,9 +54,9 @@
         label.textContent = 'Enviando…';
         try {
           const body = new URLSearchParams(new FormData(form)).toString();
-          const r = await fetch('/api/contato', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }, body });
+          const r = await fetch(form.dataset.endpoint || '/api/contato', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' }, body });
           const j = await r.json().catch(() => ({}));
-          if (!r.ok || !j.ok) throw new Error(r.status);
+          if (!r.ok || !j.ok) { if (err && form.dataset.showerr && j.error) err.textContent = j.error; throw new Error(r.status); }
           form.hidden = true;
           if (ok) { ok.hidden = false; ok.focus(); }
           form.reset();
@@ -98,7 +98,61 @@
     });
   }
 
-  const init = () => { typo(); bindForms(); progress(); lensOff(); };
+  /* 4. Depoimentos públicos (a API só devolve os de 5 estrelas) */
+  function depoimentos() {
+    const boxes = [...document.querySelectorAll('[data-depo]')];
+    if (!boxes.length) return;
+    const mk = (d) => {
+      const f = document.createElement('figure'); f.className = 'dq';
+      const s = document.createElement('span'); s.className = 'dq__s'; s.setAttribute('role', 'img'); s.setAttribute('aria-label', '5 de 5 estrelas'); s.textContent = '★★★★★';
+      const q = document.createElement('blockquote'); const p = document.createElement('p'); p.textContent = d.texto; q.appendChild(p);
+      const c = document.createElement('figcaption'); const b = document.createElement('b'); b.textContent = d.nome; c.appendChild(b);
+      if (d.papel) { const r = document.createElement('span'); r.textContent = d.papel; c.appendChild(r); }
+      f.append(s, q, c); return f;
+    };
+    fetch('/api/depoimentos', { headers: { Accept: 'application/json' } }).then(r => (r.ok ? r.json() : [])).catch(() => []).then((list) => {
+      boxes.forEach((box) => {
+        const max = Number(box.dataset.depo) || 30;
+        box.textContent = '';
+        if (!Array.isArray(list) || !list.length) {
+          const e = document.createElement('p'); e.className = 'dq__empty'; e.textContent = 'Ainda não há depoimentos publicados. Quer ser a primeira pessoa a deixar o seu?'; box.appendChild(e); return;
+        }
+        list.slice(0, max).forEach((d) => box.appendChild(mk(d)));
+        box.classList.add('has');
+      });
+    });
+  }
+
+  /* 5. Artigos do Substack junto aos do blog (a lista vem do feed público, via /api/substack) */
+  function substack() {
+    const host = document.querySelector('[data-substack]');
+    if (!host) return;
+    const list = host.querySelector('.plist');
+    fetch('/api/substack', { headers: { Accept: 'application/json' } }).then(r => (r.ok ? r.json() : [])).catch(() => []).then((items) => {
+      if (!Array.isArray(items) || !items.length || !list) return;
+      const fmt = (iso) => { const d = new Date(iso + 'T12:00:00'); return isNaN(d) ? '' : d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' }); };
+      items.forEach((it) => {
+        const a = document.createElement('a'); a.className = 'bc bc--ext'; a.href = it.url; a.target = '_blank'; a.rel = 'noopener'; a.dataset.src = 'substack'; a.dataset.date = it.date || '';
+        const im = document.createElement('span'); im.className = 'bc__img'; im.setAttribute('aria-hidden', 'true');
+        if (it.img) { const i = document.createElement('img'); i.src = it.img; i.alt = ''; i.loading = 'lazy'; i.decoding = 'async'; im.appendChild(i); } else { im.classList.add('bc__img--sub'); im.textContent = 'Substack'; }
+        const m = document.createElement('span'); m.className = 'bc__meta'; m.textContent = 'Substack' + (it.date ? ' · ' + fmt(it.date) : '');
+        const h = document.createElement('h3'); h.textContent = it.title;
+        const p = document.createElement('p'); p.textContent = it.desc || '';
+        const g = document.createElement('span'); g.className = 'bc__go'; g.innerHTML = 'Ler no Substack <i aria-hidden="true">↗</i>';
+        a.append(im, m, h, p, g); list.appendChild(a);
+      });
+      [...list.children].sort((x, y) => (y.dataset.date || '').localeCompare(x.dataset.date || '')).forEach((c) => list.appendChild(c));
+      const chips = host.querySelector('.chips'); if (!chips) return;
+      chips.hidden = false;
+      chips.addEventListener('click', (e) => {
+        const b = e.target.closest('button[data-f]'); if (!b) return;
+        chips.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        [...list.children].forEach((c) => { c.hidden = b.dataset.f !== 'all' && c.dataset.src !== b.dataset.f; });
+      });
+    });
+  }
+
+  const init = () => { typo(); bindForms(); progress(); lensOff(); depoimentos(); substack(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   window.InversoTypo = typo;
 })();

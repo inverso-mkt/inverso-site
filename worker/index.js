@@ -1,7 +1,10 @@
 /**
  * Inverso — função do formulário de contato.
  *
- * Só atende POST /api/contato (o resto do site é servido como arquivo estático).
+ * Atende só /api/* (o resto do site é servido como arquivo estático):
+ *   POST /api/contato       formulário de contato → e-mail via Resend
+ *   GET  /api/substack      artigos do Substack (feed RSS) em JSON
+ *   GET/POST /api/depoimentos[/ocultar]   depoimentos (ver depoimentos.js)
  * Valida os campos, descarta robôs (campo-armadilha) e envia o pedido por e-mail via Resend.
  *
  * Configuração (Cloudflare → Workers → inverso-site → Configurações → Variáveis e segredos):
@@ -9,6 +12,9 @@
  *   CONTACT_TO      e-mail que recebe os contatos (segredo)
  *   CONTACT_FROM    opcional; remetente. Padrão: "Inverso <onboarding@resend.dev>"
  */
+
+import { substack } from './substack.js';
+import { depoimentos } from './depoimentos.js';
 
 const MAX_BODY = 20000;
 const LIMITS = { nome: 120, email: 254, whatsapp: 40, area: 60, origem: 40, mensagem: 4000 };
@@ -132,8 +138,13 @@ async function contato(request, env, url) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    if (url.pathname === '/api/substack') {
+      if (request.method !== 'GET') return new Response('Método não permitido', { status: 405, headers: { Allow: 'GET' } });
+      return substack(request, env, url, ctx);
+    }
+    if (url.pathname === '/api/depoimentos' || url.pathname === '/api/depoimentos/ocultar') return depoimentos(request, env, url, ctx);
     if (url.pathname === '/api/contato') {
       if (request.method !== 'POST') {
         return new Response('Método não permitido', { status: 405, headers: { Allow: 'POST' } });
