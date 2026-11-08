@@ -69,6 +69,14 @@ export async function substack(request, env, url, ctx) {
   }
   if (!base) return empty();
 
+  if (url.searchParams.get('dbg') === '2') {
+    const out = {};
+    const b = base.replace(/\/+$/, '');
+    for (const [k, path, ua] of [['feed_ua', '/feed', 'Mozilla/5.0 (compatible; InversoSite/1.0; +https://inverso-site.inverso-mkt.workers.dev)'], ['api_ua', '/api/v1/archive?sort=new&limit=12', 'Mozilla/5.0 (compatible; InversoSite/1.0; +https://inverso-site.inverso-mkt.workers.dev)'], ['api_plain', '/api/v1/archive?sort=new&limit=12', '']]) {
+      try { const r = await fetch(b + path, { headers: ua ? { 'User-Agent': ua, Accept: '*/*' } : { Accept: '*/*' } }); out[k] = r.status + ':' + (await r.text()).length; } catch (e) { out[k] = 'err'; }
+    }
+    return new Response(JSON.stringify(out), { headers: { 'Content-Type': 'application/json' } });
+  }
   let xml;
   try {
     const r = await fetch(base.replace(/\/+$/, '') + '/feed', { headers: { Accept: 'application/rss+xml, application/xml, text/xml' }, cf: { cacheTtl: 600 } });
