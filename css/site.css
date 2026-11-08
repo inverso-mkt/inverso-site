@@ -166,7 +166,7 @@ body.bl { background: #fff; color: #000; }
 .bl .foot { margin-top: 0; }
 
 /* Navegação no celular: Blog e Contato sempre acessíveis */
-@media (max-width: 39.99rem) {
+@media (max-width: 42.49rem) {
   .bar__nav { display: flex; gap: .95rem; margin-left: auto; margin-right: 0; font-size: .85rem; }
   .bar__nav a + a { margin-left: 0; }
   .bar__nav a[href$="#servicos"] { display: none; }
@@ -258,7 +258,7 @@ body.bl { background: #fff; color: #000; }
 .dots--foot .dot { width: 2.8rem; height: 2.8rem; }
 .dots--foot .dot svg { width: 1.3rem; height: 1.3rem; }
 .dots--foot .dot__t { font-size: .9rem; }
-@media (max-width: 39.99rem) { .dots--bar { display: none; } }
+@media (max-width: 55.99rem) { .dots--bar { display: none; } }
 .foot__small a { text-underline-offset: .2em; }
 
 /* ===== Filtro do blog (Blog / Substack) ===== */
