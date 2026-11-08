@@ -69,27 +69,24 @@ export async function substack(request, env, url, ctx) {
   }
   if (!base) return empty();
 
-  if (url.searchParams.get('dbg') === '2') {
-    const out = {};
-    const b = base.replace(/\/+$/, '');
-    for (const [k, path, ua] of [['feed_ua', '/feed', 'Mozilla/5.0 (compatible; InversoSite/1.0; +https://inverso-site.inverso-mkt.workers.dev)'], ['api_ua', '/api/v1/archive?sort=new&limit=12', 'Mozilla/5.0 (compatible; InversoSite/1.0; +https://inverso-site.inverso-mkt.workers.dev)'], ['api_plain', '/api/v1/archive?sort=new&limit=12', '']]) {
-      try { const r = await fetch(b + path, { headers: ua ? { 'User-Agent': ua, Accept: '*/*' } : { Accept: '*/*' } }); out[k] = r.status + ':' + (await r.text()).length; } catch (e) { out[k] = 'err'; }
-    }
-    return new Response(JSON.stringify(out), { headers: { 'Content-Type': 'application/json' } });
-  }
-  let xml;
+  // O Substack costuma responder 429 para requisições vindas de servidores (datacenter).
+  // Se o feed ao vivo falhar, usa a cópia gravada em /data/substack.json.
+  let items = [];
   try {
     const r = await fetch(base.replace(/\/+$/, '') + '/feed', { headers: { Accept: 'application/rss+xml, application/xml, text/xml' }, cf: { cacheTtl: 600 } });
-    if (url.searchParams.get('dbg') === '1') return new Response(JSON.stringify({status: r.status, ct: r.headers.get('content-type'), len: (await r.text()).length}), { headers: { 'Content-Type': 'application/json' } });
-    if (!r.ok) return empty();
-    xml = await r.text();
+    if (r.ok) items = parseFeed(await r.text());
   } catch (e) {
     console.error('substack: falha ao ler o feed', String(e));
-    if (url.searchParams.get('dbg') === '1') return new Response(JSON.stringify({erro: String(e)}), { headers: { 'Content-Type': 'application/json' } });
-    return empty();
+  }
+  if (!items.length) {
+    try {
+      const r = await env.ASSETS.fetch(new Request(new URL('/data/substack.json', url)));
+      if (r.ok) items = (await r.json()).slice(0, MAX_ITEMS);
+    } catch {}
+    if (!items.length) return empty();
   }
 
-  const res = new Response(JSON.stringify(parseFeed(xml)), { headers });
+  const res = new Response(JSON.stringify(items), { headers });
   ctx?.waitUntil(cache.put(key, res.clone()));
   return res;
 }
